@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="pt">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Controle de Faltas</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+
+<body class="bg-light">
+    <div class="container mt-5">
+        <h1 class="text-center">📋 Controle de Faltas</h1>
+
+        <a href="add_falta" class="btn btn-primary my-3">➕ Adicionar Falta</a>
+
+        <!-- Botão para adicionar matéria -->
+        <a href="add_materia" class="btn btn-success my-3">📚 Adicionar Matéria</a>
+
+        <h3 class="mt-4">📊 Estatísticas de Faltas</h3>
+        <table class="table table-bordered table-striped">
+            <thead class="table-dark">
+                <tr>
+                    <th>Matéria</th>
+                    <th>Total de Faltas</th>
+                    <th>Máximo Permitido</th>
+                    <th>Faltas Restantes</th>
+                    <th>Ação</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for estat in estatisticas %}
+                <tr class="{% if estat.faltas_restantes <= 0 %}table-danger{% endif %}">
+                    <td>{{ estat.materia }}</td>
+                    <td>{{ estat.total_faltas }}</td>
+                    <td>{{ estat.max_faltas }}</td>
+                    <td>{{ estat.faltas_restantes }}</td>
+                    <td>
+                        <!-- Botão de Remover Matéria -->
+                        <a href="/delete_materia/{{ estat['id'] }}" class="btn btn-danger btn-sm">🗑️ Remover</a>
+
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <h3 class="mt-4">📜 Lista de Faltas</h3>
+        <table class="table table-bordered table-striped">
+            <thead class="table-dark">
+                <tr>
+                    <th>Matéria</th>
+                    <th>Data</th>
+                    <th>Motivo</th>
+                    <th>Ação</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for falta in faltas %}
+                <tr>
+                    <td>{{ falta[1] }}</td>
+                    <td>{{ falta[2] }}</td>
+                    <td>{{ falta[3] }}</td>
+                    <td>
+                        <!-- Botão de Remover Falta -->
+                        <a href="/delete_falta/{{ falta[0] }}" class="btn btn-danger btn-sm">🗑️ Remover</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+    </div>
+</body>
+
+</html>

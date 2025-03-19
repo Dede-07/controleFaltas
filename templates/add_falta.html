@@ -1,0 +1,41 @@
+<head>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<form method="POST" class="p-4 shadow bg-light rounded border border-secondary container mt-5">
+    <h3 class="mb-4 text-center">➕ Adicionar Falta</h3>
+
+    <div class="mb-3">
+        <label class="form-label">Matéria:</label>
+        <select name="materia_id" class="form-select" required>
+            {% for materia in materias %}
+            <option value="{{ materia[0] }}">{{ materia[1] }}</option>
+            {% endfor %}
+        </select>
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">Data da Falta:</label>
+        <input type="date" name="data_falta" class="form-control" required>
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">Motivo:</label>
+        <input type="text" name="motivo" class="form-control" placeholder="Informe o motivo da falta">
+    </div>
+
+    <!-- Novo campo para selecionar o número de aulas faltadas -->
+    <div class="mb-3">
+        <label class="form-label">Número de Aulas nesse dia:</label>
+        <select name="num_aulas" class="form-select" required>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+            <option value="6">6</option>
+        </select>
+    </div>
+
+    <button type="submit" class="btn btn-success">Salvar</button>
+    <a href="/" class="btn btn-secondary">⬅ Voltar</a>
+</form>

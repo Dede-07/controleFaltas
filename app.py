@@ -33,7 +33,6 @@ def init_db():
 
 init_db()
 
-# Função para contar faltas por matéria
 def contar_faltas():
     conn = sqlite3.connect("faltas.db")
     cursor = conn.cursor()
@@ -49,10 +48,10 @@ def contar_faltas():
 
     estatisticas = []
     for id_materia, nome, total_faltas, total_aulas in dados:
-        max_faltas = total_aulas * 0.25  # 25% de limite de faltas
+        max_faltas = total_aulas * 0.25  # 25% do limite de faltas
         faltas_restantes = max_faltas - total_faltas
         estatisticas.append({
-            "id": id_materia,  # Adicionar id da matéria
+            "id": id_materia,
             "materia": nome,
             "total_faltas": total_faltas,
             "max_faltas": max_faltas,
@@ -78,7 +77,7 @@ def index():
 
     return render_template("index.html", faltas=faltas, estatisticas=estatisticas)
 
-# Página para adicionar matéria
+# Página - adicionar matéria
 @app.route("/add_materia", methods=["GET", "POST"])
 def add_materia():
     if request.method == "POST":
@@ -94,7 +93,7 @@ def add_materia():
 
     return render_template("add_materia.html")
 
-# Página para adicionar falta
+# Página - adicionar falta
 @app.route("/add_falta", methods=["GET", "POST"])
 def add_falta():
     conn = sqlite3.connect("faltas.db")
@@ -107,9 +106,8 @@ def add_falta():
         materia_id = request.form["materia_id"]
         data_falta = request.form["data_falta"]
         motivo = request.form["motivo"]
-        num_aulas = int(request.form["num_aulas"])  # Pega o número de aulas faltadas
+        num_aulas = int(request.form["num_aulas"])  # Pega o número de aulas que faltou
 
-        # Verificar se materia_id é válido
         if not materia_id:
             return "Erro: Matéria não selecionada."
 
@@ -124,7 +122,7 @@ def add_falta():
             return "Erro: Matéria inválida."
 
         # Registrar as faltas para o número de aulas faltadas
-        for _ in range(num_aulas):  # Adiciona uma falta para cada aula faltada
+        for _ in range(num_aulas): 
             cursor.execute("INSERT INTO faltas (materia_id, data_falta, motivo) VALUES (?, ?, ?)", 
                            (materia_id, data_falta, motivo))
         
